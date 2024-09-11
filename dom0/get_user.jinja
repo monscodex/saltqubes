@@ -1,0 +1,1 @@
+{% set dom0_user=salt.cmd.shell("ps -ef | grep [q]vm-start-daemon | head -n1 | awk '{print $1;}' ") %}

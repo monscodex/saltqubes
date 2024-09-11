@@ -1,0 +1,8 @@
+[Unit]
+Description=Fix Network Manager Service by touching a file.
+
+[Service]
+ExecStart=/etc/fix-network-manager/create-qubes-service-network-manager-file.sh
+
+[Install]
+RequiredBy=NetworkManager.service

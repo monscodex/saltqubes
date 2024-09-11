@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Fix Pipewire not working
+# In Qubes 4.2
+rm -rf /home/{{ dom0_user }}/.config/pulse/
+sleep 7
+pulseaudio -k
+
+
+
+source /home/{{ dom0_user}}/.bashrc
+
+open_protonvpn_in_vm() {
+    qvm-run -q -a --service -- $1 qubes.StartApp+protonvpn-app
+
+    sleep 4
+
+    xdotool type $ZOO_TICKET
+    xdotool key Return
+
+    sleep 11
+}
+
+# Move to workspace N, then open protonvpn in appvm, then stick window to side
+xdotool key super+5
+
+open_protonvpn_in_vm "sys-ardilla"
+xdotool key super+comma
+xdotool key super+h
+
+# idk why this does not need putting it to the right
+open_protonvpn_in_vm "sys-elephant"
+xdotool key super+comma
+
+open_protonvpn_in_vm "sys-rhinoceros"
+xdotool key super+h
+
+open_protonvpn_in_vm "sys-buffalo"
+xdotool key super+l
+
+
+
+# Running forever
+redshift -c {{ redshift_config_path }} &

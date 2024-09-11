@@ -1,0 +1,20 @@
+{% from 'common-appvms/macros.jinja' import expand_appvm_storage_if_needed %}
+
+
+{% macro expand_storage_for_nix_if_needed(appvm_name, free_space_object) %}
+
+    {% set nix_env_list = salt["cmd.run"]('qvm-run --pass-io ' ~ appvm_name ~ ' "ls /home/user/.nix-profile/bin/nix-env"') %}
+
+    # Expand storage by 600MB only if it isn't installed
+    {% set free_space_object.value = free_space_object.value + 600000
+        if 'No such file or directory' in nix_env_list
+        else free_space_object.value
+    %}
+
+
+    {{ expand_appvm_storage_if_needed(
+        appvm_name=appvm_name,
+        required_free_space_KB=free_space_object.value ,
+    )}}
+
+{% endmacro %}

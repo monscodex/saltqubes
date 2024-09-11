@@ -1,0 +1,22 @@
+{% macro expand_appvm_storage_if_needed(appvm_name, required_free_space_KB) %}
+
+
+  {% set volume_info_raw = salt["cmd.run"]('qvm-volume info ' ~ appvm_name ~ ':private') %}
+
+  {% set volume_info_lines = volume_info_raw.splitlines() %}
+
+  {% set volume_size_KB = volume_info_lines[6].strip().replace("size", "")[:-3] | int %}
+  {% set volume_usage_KB = volume_info_lines[7].strip().replace("usage", "")[:-3] | int %}
+
+  {% set free_space_KB = volume_size_KB - volume_usage_KB %}
+
+  {% if free_space_KB < required_free_space_KB %}
+    {% set target_size_KB = volume_size_KB + required_free_space_KB - free_space_KB %}
+
+{{ slsdotpath }}_expand_{{ appvm_name }}_private_storage:
+  cmd.run:
+    - name: "qvm-volume resize {{ appvm_name }}:private {{ target_size_KB }}KB"
+  {% endif %}
+
+
+{% endmacro %}

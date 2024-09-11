@@ -1,0 +1,5 @@
+user:
+  dom0:
+    - template-signal.create
+  template-signal:
+    - template-signal.install

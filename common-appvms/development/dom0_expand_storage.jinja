@@ -1,0 +1,26 @@
+{% from 'common-appvms/macros.jinja' import expand_appvm_storage_if_needed with context %}
+
+{% from 'common-appvms/nix/dom0_expand_storage.jinja' import expand_storage_for_nix_if_needed %}
+
+{% macro expand_storage_for_development_if_needed(appvm_name, free_space_object ) %}
+
+    {{ expand_storage_for_nix_if_needed(
+        appvm_name=appvm_name,
+        free_space_object=free_space_object
+    ) }}
+
+    {% set lvim_list = salt["cmd.run"]("qvm-run --pass-io " ~ appvm_name ~ " 'ls /home/user/.nix-profile/bin/lvim'") %}
+
+    # Expand storage by 4GB only if it isn't installed
+    {% set free_space_object.value = free_space_object.value + 4000000
+        if 'No such file or directory' in lvim_list
+        else free_space_object.value
+    %}
+
+
+    {{ expand_appvm_storage_if_needed(
+        appvm_name=appvm_name,
+        required_free_space_KB=free_space_object.value,
+    )}}
+
+{% endmacro %}

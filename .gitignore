@@ -1,0 +1,7 @@
+# Created by default by running state.sls user-salt
+user_salt/
+locale/
+
+# Uneditable config files
+dotfiles/xfce4/xconf/
+dotfiles/xfce4/xfconf/

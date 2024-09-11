@@ -1,0 +1,5 @@
+user:
+  dom0:
+    - template-protonvpn.create
+  template-protonvpn:
+    - template-protonvpn.install

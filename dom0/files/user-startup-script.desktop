@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=User-startup-script
+Exec=/home/{{ dom0_user }}/.config/user-startup-script
