@@ -22,7 +22,7 @@
 {{ slsdotpath }}_append_fish_lunarvim_editor:
   file.append:
     - name: /home/user/.config/fish/config.fish
-    - text: 'set -x EDITOR "/usr/bin/env TERM=screen lvim"; set -x MANPAGER "/usr/bin/env TERM=screen lvim +Man!"'
+    - text: 'alias lvim="/usr/bin/env TERM=screen lvim"; set -x EDITOR "/usr/bin/env TERM=screen lvim"; set -x MANPAGER "/usr/bin/env TERM=screen lvim +Man!"'
 
 
 
@@ -33,4 +33,4 @@
 {{ slsdotpath }}_append_bashrc_lunarvim_editor:
   file.append:
     - name: /home/user/.bashrc
-    - text: 'export EDITOR="/usr/bin/env TERM=screen lvim"; export MANPAGER="/usr/bin/env TERM=screen lvim +Man!"'
+    - text: 'alias lvim="/usr/bin/env TERM=screen lvim"; export EDITOR="/usr/bin/env TERM=screen lvim"; export MANPAGER="/usr/bin/env TERM=screen lvim +Man!"'
