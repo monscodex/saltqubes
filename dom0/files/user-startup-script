@@ -6,7 +6,8 @@ rm -rf /home/{{ dom0_user }}/.config/pulse/
 sleep 7
 pulseaudio -k
 
-
+# Set right alt compose key (does accents and cool chars)
+setxkbmap -option compose:ralt
 
 source /home/{{ dom0_user}}/.bashrc
 
