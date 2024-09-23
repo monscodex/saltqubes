@@ -21,7 +21,7 @@ I do not hold responsible for any vulnerabilities neither in the code nor in its
 1. Create a disposable
 2. Clone the repo
 3. Turn off the internet for that qube
-4. Review the code.
+4. Review the code
 5. Manually type all code to dom0 or inspire yourself to create your own formula.
 
 ### Practical installation (requires git installed on dom0 and files passed to dom0)
@@ -32,14 +32,14 @@ I do not hold responsible for any vulnerabilities neither in the code nor in its
 2. Create a disposable
 3. Clone the repo
 4. Turn off the internet for that qube
-5. Review the code.
+5. Review the code
 6. Git bundle (from the disposable: cd into the repo and run `git bundle create YOURPATHTOBUNDLE`)
 
 #### Proceed to the installation from dom0
 
 7. Pass the bundle to dom0 (from dom0: `qvm-run --pass-io YOURDISPNAME 'cat YOURFULLPATHTOBUNDLE' > YOURDOM0BUNDLE`)
 8. Enable user salt with `qubesctl state.sls qubes.user-dirs`
-9. Unbundle with (from dom0: `git clone YOURPATHTODOM0BUNDLE`)
+9. Unbundle (from dom0: `git clone YOURPATHTODOM0BUNDLE`)
 10. Run 00_fix_salt.sh as root (to fix a weird bug in qubes salt 4.2)
 11. Copy the code to /srv/user_salt
 12. Installed! See the usage section
@@ -48,7 +48,7 @@ I do not hold responsible for any vulnerabilities neither in the code nor in its
 
 ### dom0
 
-1. Add your xfce4 configuration to 'dotfiles/xfce4'
+1. Add your xfce4 configuration to `dotfiles/xfce4`
 2. Enable dom0 top file with `qubesctl top.enable dom0`
 3. Run `qubesctl --show-output state.highstate`
 4. Disable the top file `qubesctl top.disable dom0`
@@ -80,15 +80,15 @@ Here are some considerations:
 
 Salt is beautiful, exciting and _addictive_.
 
-Define WHAT you are trying to automate and set your limits.
+Define WHAT you are trying to automate and set your limits. This will prevent you from descending the infinite spiral of complexity.
 
 My examples:
 
 - [x] Automate templates for _all my needs_
 - [x] Automate _a bit_ of tedious appvm config (nix, nix packages for dev setup)
-- [x] Using a minimal template _if I can_
+- [x] Using minimal templates _if I can_
 
-Minimal templates are tricky, especially for networking: an area where I lack basic knowledge.
+Minimal templates are tricky, especially for networking: an area where I lack knowledge.
 
 I spent +4 days trying to install protonvpn on a minimal template for `template-protonvpn`. It worked one of debian or fedora but not for the other.
 
@@ -98,29 +98,29 @@ I spent +4 days trying to install protonvpn on a minimal template for `template-
 
 All templates have the same file structure.
 
-`common-templates` may seem difficult but it becomes pretty straight forward when you get review it once.
+The sturcture of `common-templates` may seem strage but becomes pretty clear when you see the big picture.
 
 #### Example 2: Jinja
 
-That's the reason saltstack developers use yaml + jinja2 for simple things and python for more complex things.
+Saltstack devs use yaml + jinja2 for simple things and python for more complex things.
 
-The whole code is straight forward. I believe `common-appvms/macros.jinja` is on the edge of what's reasonable with jinja.
+Moderately use jinja. Keep jinja files straight forward.
 
-#### Example 3: See the big picture
+#### Example 3: Value your time
 
-You might want to automate every little aspect of a setup. In order to do that, you scripted 90% of the functionality in 2h. Then you realized to achieve the additional 10% it will require a major rewrite of the states you've written, maybe achievable in 4h. Value your time (and your patience)
++You might want to automate every little aspect of your setup. Avoid this if it takes you 20 hours to automate the 10% remaining of a feature if 90% of that feature took you 10 hours to develop.
 
 ### Think outside the box
 
-If salt may be unusual to you and things might not work as you expect. In case that happens, be prepared to search for workarounds.
+Salt may be unusual to you and things might not work as you expect. In that case, be prepared to search for workarounds.
 
 ### Example: Grains not working
 
-Grains did not working on qubes 4.2
+I could not get grains working in qubes 4.2.
 
 I wanted to set a grain each time I installed an application (ex: web browser, text editor, etc). Then I would read them to set the default applications for the qube (mimeapps.list).
 
-I instead use a simple solution: verify if the .desktop file exists in the qube. If it exists the app is installed => set it as default application.
++I used a simple solution instead: verify if the .desktop file exists in the qube. If it exists the app is installed, so set it as the default application.
 
 ## Credits
 
