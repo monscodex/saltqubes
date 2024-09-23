@@ -13,6 +13,7 @@
       - qubes-app-shutdown-idle
       - pulseaudio-qubes
       - qubes-audio-daemon
+      - qubes-usb-proxy
     - skip_suggestions: True
     - install_recommends: False
 

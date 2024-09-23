@@ -10,6 +10,7 @@
       - qubes-img-converter
       - qubes-core-agent-thunar
       - qubes-app-shutdown-idle
+      - qubes-usb-proxy
       - pulseaudio-qubes
       - qubes-audio-daemon
     - skip_suggestions: True
