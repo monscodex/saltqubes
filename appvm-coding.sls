@@ -6,7 +6,7 @@
 
 {% set free_space_object = namespace(value=0) %}
 
-# USAGE: Call expand... with arguments DESIRED_APPVM, free_space_object)
+# USAGE: Call {{ expand_storage_for_development_if_needed }} with arguments DESIRED_APPVM, free_space_object)
 
 
 {% else %}
