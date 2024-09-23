@@ -159,7 +159,7 @@ local function setup_keymaps()
   keymap("v", ">", ">gv", options)
 
   -- Terminal
-  keymap("t", "jk", "<C-\\><C-n>", options)
+  keymap("t", "kj", "<C-\\><C-n>", options)
   keymap("n", "tv", ":vsplit term:///usr/bin/fish<cr>i", options)
   keymap("n", "ts", ":split term:///usr/bin/fish<cr>i", options)
 
