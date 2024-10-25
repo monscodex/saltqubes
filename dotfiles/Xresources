@@ -2,8 +2,9 @@
 ! - csdvrx for their amazing CuteXterm
 ! - stronk-dev for their amazing Tokyo-Night-Linux
 
-
-
+! CHANGEME FIXME TODO: Change your dpi settings
+! IMPORTANT: Divisible by 6
+Xft.dpi: 144
 
 ! Allow regular colors, italics and underline
 XTerm*underLine: true
