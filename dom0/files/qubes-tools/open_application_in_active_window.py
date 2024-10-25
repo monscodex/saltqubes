@@ -26,7 +26,7 @@ def get_command_to_execute(vm_name):
         return argv[1]
 
 
-    command_to_execute = argv[1]
+    command_to_execute = argv[2]
 
     return f"qvm-run -u {user} {vm_name} {command_to_execute}"
 
