@@ -30,6 +30,17 @@
 
 
 
+{{ slsdotpath }}_copy_awesomewm_config:
+  file.recurse:
+    - name: /home/{{ dom0_user }}/.config/awesome/
+    - source: salt://dotfiles/awesome/
+    - user: root
+    - group: root
+    - file_mode: '0666'
+    - dir_mode: '0755'
+
+
+
 {{ slsdotpath }}_copy_rofi_settings:
   file.recurse:
     - name: /home/{{ dom0_user }}/.config/rofi/
