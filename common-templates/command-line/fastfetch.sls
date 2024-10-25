@@ -1,4 +1,4 @@
-{% if grains['os'] == 'Debian' %}
+{% if grains['os_family'] == 'Debian' %}
 
 
 {{ slsdotpath }}_download_fastfetch_deb:
@@ -15,7 +15,7 @@
   file.absent:
     - name: /tmp/fastfetch-linux-amd64.deb
 
-{% elif grains['os'] == 'RedHat'%}
+{% elif grains['os_family'] == 'RedHat'%}
 
 {{ slsdotpath }}_install_fastfetch:
   pkg.installed:

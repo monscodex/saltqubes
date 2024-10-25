@@ -14,10 +14,10 @@ include:
       - rawtherapee
       - krita
       - darktable
-{% if grains['os'] == 'RedHat' %}
+{% if grains['os_family'] == 'RedHat' %}
       - ffmpeg-free
       - openshot
-{% elif grains['os'] == 'Debian' %}
+{% elif grains['os_family'] == 'Debian' %}
       - ffmpeg
       - openshot-qt
 {% endif %}

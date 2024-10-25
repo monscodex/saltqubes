@@ -7,7 +7,7 @@
     - runas: root
 
 
-{% elif grains['os'] == 'Debian' %}
+{% elif grains['os_family'] == 'Debian' %}
 
 
 {{ slsdotpath }}_download_neovim_deb:
@@ -35,7 +35,7 @@
     - name: /tmp/nvim-linux64.hashok.deb
 
 
-{% elif grains['os'] == 'RedHat' %}
+{% elif grains['os_family'] == 'RedHat' %}
 
 
 {{ slsdotpath }}_install_neovim:
@@ -47,7 +47,7 @@
 
 
 
-{% if grains['os'] in ['RedHat', 'Debian'] %}
+{% if grains['os_family'] in ['RedHat', 'Debian'] %}
 
 {{ slsdotpath }}_install_neovim_python_support:
   pkg.installed:

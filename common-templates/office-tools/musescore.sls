@@ -7,7 +7,7 @@
       - musescore
 
 
-{% elif grains['os'] == 'Debian' %}
+{% elif grains['os_family'] == 'Debian' %}
 
 
 {{ slspath }}_install_musescore_debian_fonts:

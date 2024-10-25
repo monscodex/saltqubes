@@ -23,3 +23,6 @@ command-line-tools_install:
       - xsel
       - hyperfine
       - python3-ipython
+{% if grains['os_family'] == 'RedHat' %}
+      - procps-ng # Provides watch, ps, top
+{% endif %}
