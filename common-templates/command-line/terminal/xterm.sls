@@ -22,4 +22,5 @@
 
 {{ slsdotpath }}_update_Xresources_config:
   cmd.run:
+    # Do not merge, we are setting this as the default values
     - name: xrdb /etc/X11/Xresources
