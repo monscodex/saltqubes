@@ -131,3 +131,11 @@
   file.append:
     - name: /etc/environment
     - text: "QT_STYLE_OVERRIDE=adwaita-dark"
+
+
+
+{{ slsdotpath }}_copy_script_start-sys-usb-after-sleep:
+  file.managed:
+    - name: /lib/systemd/system-sleep/start-sys-usb-after-sleep
+    - source: salt://{{ slspath }}/files/start-sys-usb-after-sleep
+    - mode: 555

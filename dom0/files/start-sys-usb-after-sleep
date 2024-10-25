@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case "$1" in
+    post)
+        # Execute command after sleep
+        /usr/bin/qvm-start sys-usb
+        ;;
+    *)
+        # Execute command before sleep
+        ;;
+esac
+
+exit 0;
