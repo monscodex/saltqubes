@@ -3,7 +3,7 @@ include:
 
 {{ slspath }}_install_client_flatpaks:
   cmd.run:
-    - name: https_proxy=http://localhost:8082 flatpak install -y flathub io.freetubeapp.FreeTube
+    - name: https_proxy=http://localhost:8082 flatpak install -y flathub io.freetubeapp.FreeTube com.github.KRTirtho.Spotube
 
 {{ slspath }}_install_client_official_packages:
   pkg.installed:
