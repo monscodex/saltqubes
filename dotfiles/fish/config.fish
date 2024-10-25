@@ -113,6 +113,12 @@ if command -q difft
 end
 
 
+# Working with salt in dom0. --force-color is called UNSAFE by the manpage
+if command -q qubesctl
+    alias qubesctl='qubesctl --show-output --force-color'
+end
+
+
 # neovim commands
 # IMPORTANT: screen fixes bad scrolling with multiple panes
 if command -q nvim
