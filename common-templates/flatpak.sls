@@ -4,4 +4,6 @@
 
 {{ slsdotpath }}_add_flathub_repo:
   cmd.run:
-    - name: https_proxy=http://localhost:8082 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    - name: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    - env:
+      - HTTPS_PROXY: http://localhost:8082
