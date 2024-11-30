@@ -1,6 +1,7 @@
 include:
   - {{ slsdotpath }}.editing
   - {{ slsdotpath }}.client
+  - common-templates.thunar-thumbnails
 
 {{ slspath }}_install_diverse_flatpaks:
   cmd.run:

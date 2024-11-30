@@ -15,5 +15,6 @@
 include:
   - common-templates.hooks.pre-install-extra-essentials
   - common-templates.dunst
+  - common-templates.thunar-thumbnails
   - {{ slsdotpath }}.files.signal-desktop
   - common-templates.hooks.post-install-nothing
