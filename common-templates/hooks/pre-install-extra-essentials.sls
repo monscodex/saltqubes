@@ -6,14 +6,14 @@ common_install:
     - pkgs:
       - pciutils
       - psmisc
-      - wget
       - zenity
+      - curl
 {% if grains['os_family'] == 'Debian' %}
       - x11-utils
-      - curl
+      - wget
 {% elif grains['os_family'] == 'RedHat' %}
       - xkill
-      - curl-minimal
+      - wget2
 {% endif %}
       - bpytop
       - man-db
