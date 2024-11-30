@@ -1,17 +1,27 @@
-{% set template_name = 'debian-12-minimal' %}
+{% from slspath ~ '/template-name.jinja' import base_template, create_new_template, template_name %}
+
+
+{% if create_new_template %}
+
+{{ slsdotpath }}_remove_new_template_if_needed:
+  qvm.absent:
+    - name: {{ template_name }}
+
+{% endif %}
+
 
 {{ slsdotpath }}_precursor:
   qvm.template_installed:
-    - name: {{ template_name }}
+    - name: {{ base_template }}
 
 {{ slsdotpath }}_qvm-clone:
   qvm.clone:
-    - name: {{ slsdotpath }}
-    - source: {{ template_name }}
+    - name: {{ template_name }}
+    - source: {{ base_template }}
 
 {{ slsdotpath }}_menu:
   qvm.features:
-    - name: {{ slsdotpath }}
+    - name: {{ template_name }}
     - set:
       - menu-items: "debian-xterm.desktop"
       - default-menu-items: "signal-desktop.desktop"

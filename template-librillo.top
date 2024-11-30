@@ -1,5 +1,5 @@
 user:
   dom0:
     - template-librillo.create
-  template-librillo:
+  template-librillo or template-librillo-new:
     - template-librillo.install

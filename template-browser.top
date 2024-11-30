@@ -1,5 +1,5 @@
 user:
   dom0:
     - template-browser.create
-  template-browser:
+  template-browser or template-browser-new:
     - template-browser.install

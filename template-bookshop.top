@@ -1,5 +1,5 @@
 user:
   dom0:
     - template-bookshop.create
-  template-bookshop:
+  template-bookshop or template-bookshop-new:
     - template-bookshop.install

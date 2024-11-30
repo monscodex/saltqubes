@@ -1,5 +1,5 @@
 user:
   dom0:
     - template-multitool.create
-  template-multitool:
+  template-multitool or template-multitool-new:
     - template-multitool.install

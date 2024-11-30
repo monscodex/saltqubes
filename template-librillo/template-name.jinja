@@ -1,1 +1,12 @@
 {% set base_template="debian-12-minimal" %}
+
+{# Generally only set to True if you are #}
+{# upgrading to a new release of the base template #}
+{% set create_new_template=False %}
+
+
+{% set template_name =
+    slsdotpath[:27] ~ '-new'
+    if create_new_template
+    else slsdotpath
+%}
