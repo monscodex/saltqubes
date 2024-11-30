@@ -68,6 +68,52 @@ I do not hold responsible for any vulnerabilities neither in the code nor in its
 5. Run highstate
 6. Disable
 
+## Workflow
+
+### Code in dom0
+
+1. Add changes
+2. Commit changes
+
+### Push to remote
+
+#### IN DOM0: First create a bundle in dom0 and pass to vm
+
+```bash
+cd /srv/user_salt
+git bundle create ~/saltqubes-$(date +'%Y%m%d-%H%M%S').bundle --all
+qvm-copy-to-vm YOURCODINGVM ~/SALTQUBESBUNDLE
+```
+
+#### IN VM: Then unbundle and make patches
+
+```bash
+git clone ~/QubesIncoming/dom0/SALTQUBESBUNDLE
+cd saltqubes
+
+# After the '-' put the number of commits to patch backwards
+git format-patch -24
+```
+
+Then cd to your copy of the repo where you update (ex Documents/saltqubes)
+
+```bash
+git am PATHTOYOURUNBUNDLEDREPO/*.patch
+```
+
+**When you have to resolve conflicts**:
+
+```bash
+git am --show-current-patch=diff
+```
+
+Open the file(s) in conflict, edit them to resolve conflicts and finally:
+
+```bash
+git add YOURRESOLVEDFILE
+git am --continue
+```
+
 ## Hacking
 
 Automating a big part of qubes with salt was a wild ride.
