@@ -30,4 +30,4 @@
     - name: {{ template_name }}
     - set:
       - menu-items: "{{ xterm_desktop }}"
-      - default-menu-items: "librewolf.desktop brave-browser.desktop"
+      - default-menu-items: "librewolf.desktop brave-browser.desktop mullvad-browser.desktop"

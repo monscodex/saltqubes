@@ -30,4 +30,5 @@ include:
   - common-templates.dunst
   - common-templates.browser.brave
   - common-templates.browser.librewolf
+  - common-templates.browser.mullvad-browser
   - common-templates.hooks.post-install-nothing

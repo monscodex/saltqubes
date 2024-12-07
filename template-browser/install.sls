@@ -19,5 +19,6 @@ include:
   - common-templates.hooks.pre-install-extra-essentials
   - common-templates.browser.librewolf
   - common-templates.browser.brave
+  - common-templates.browser.mullvad-browser
   - common-templates.dunst
   - common-templates.hooks.post-install-nothing
