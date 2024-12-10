@@ -7,8 +7,10 @@
 
 {{ slsdotpath }}_add_repo:
   cmd.run:
-    - name: https_proxy=http://127.0.0.1:8082 extrepo enable librewolf
+    - name: extrepo enable librewolf
     - runas: root
+    - env:
+      - HTTPS_PROXY: http://localhost:8082
 
 
 {% elif grains['os_family'] == 'RedHat' %}
@@ -23,10 +25,6 @@
   file.managed:
     - name: /etc/yum.repos.d/librewolf.repo
     - source: salt://{{ slspath }}/librewolf.repo
-
-
-#{{ slsdotpath }}
-#- name: dnf config-manager --add-repo https://rpm.librewolf.net/librewolf-repo.repo
 
 
 {% endif %}
