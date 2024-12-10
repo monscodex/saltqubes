@@ -1,0 +1,5 @@
+user:
+  dom0:
+    - template-multitool-vault.create
+  template-multitool-vault or template-multitool-vault-new:
+    - template-multitool-vault.install
