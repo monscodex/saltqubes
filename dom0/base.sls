@@ -94,10 +94,18 @@
       dom0_user: {{ dom0_user }}
 
 
+{% set exported_zoo_ticket_in_bashrc =
+        salt.file.search( "/home/" ~ dom0_user ~ "/.bashrc", "export ZOO_TICKET=")
+%}
+
+{% if not exported_zoo_ticket_in_bashrc %}
+
 {{ slsdotpath }}_warn_about_zoo_ticket:
   test.fail_without_changes:
     - name: "Don't forget to export ZOO_TICKET variable in you /home/{{ dom0_user }}/.bashrc"
     - failhard: False
+
+{% endif %}
 
 
 
