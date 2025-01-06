@@ -291,11 +291,7 @@ globalkeys = gears.table.join(
               {description = "take flameshot screenshot of all screens and send to current vm", group = "launcher"}),
 
 
-    -- Qubes manager
-    awful.key({ modkey, "Control" },            "m",     function ()
-        awful.spawn('qubes-qube-manager')
-    end,
-              {description = "open qubes qube manager", group = "launcher"}),
+
 
 
     -- Rofi
@@ -341,9 +337,21 @@ globalkeys = gears.table.join(
               {description = "open librewolf on current vm", group = "launcher"}),
 
     awful.key({ modkey, "Control" },            "b",     function ()
-        awful.spawn("qvm-run -q -a --dispvm=ikea-browser --no-shell librewolf --private-window'")
+        awful.spawn("qvm-run -q -a --dispvm=ikea-browser --no-shell librewolf --private-window")
     end,
               {description = "open librewolf in disposable", group = "launcher"}),
+
+    awful.key({ modkey },            "x",     function ()
+        awful.spawn(qubes_scripts.open_application_in_active_window .. " 'qvm-run -q -a --dispvm=ikea-browser --no-shell mullvad-browser --private-window' mullvad-browser")
+    end,
+              {description = "open mullvad browser on current vm", group = "launcher"}),
+
+    awful.key({ modkey, "Control" },            "X",     function ()
+        awful.spawn("qvm-run -q -a --dispvm=ikea-browser --no-shell mullvad-browser --private-window")
+    end,
+              {description = "open mullvad browsder in disposable", group = "launcher"}),
+
+
 
 
     -- Launching terminal
