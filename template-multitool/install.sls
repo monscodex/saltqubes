@@ -19,6 +19,7 @@
 include:
   - common-templates.hooks.pre-install-extra-essentials
   - common-templates.command-line
+  - common-templates.disk-mount
   - common-templates.docker
   - common-templates.programming
   - common-templates.networking.net-utils
