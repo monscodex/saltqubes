@@ -26,13 +26,12 @@
       - containerd.io
       - docker-compose-plugin
 
-{{ slsdotpath }}_add_user_to_docker_group:
-  cmd.run:
-    - name: usermod -a -G docker user
-
-{{ slsdotpath }}_add_root_to_docker_group:
-  cmd.run:
-    - name: usermod -a -G docker root
+{{ slsdotpath }}_add_users_to_docker_group:
+  group.present:
+    - name: docker
+    - addusers:
+      - user
+      - root
 
 {{ slsdotpath }}_mkdir_etc_docker:
   file.directory:
