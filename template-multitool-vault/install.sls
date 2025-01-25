@@ -33,3 +33,8 @@ include:
   # NO INTERNET - common-templates.browser.librewolf
   # NO INTERNET - common-templates.browser.mullvad-browser
   - common-templates.hooks.post-install-nothing
+
+
+{{ slsdotpath }}_remove:
+  pkg.removed:
+    - name: qubes-core-agent-networking
