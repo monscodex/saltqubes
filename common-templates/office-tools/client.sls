@@ -14,6 +14,7 @@ include:
       - calibre
       - clementine
       - gthumb
+      - mpv
       - celluloid
       - pandoc
       - yt-dlp
