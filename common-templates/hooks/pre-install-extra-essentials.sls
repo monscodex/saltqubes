@@ -8,25 +8,24 @@ common_install:
       - psmisc
       - zenity
       - curl
-{% if grains['os_family'] == 'Debian' %}
-      - x11-utils
-      - wget
-{% elif grains['os_family'] == 'RedHat' %}
-      - xkill
-      - wget2
-{% endif %}
-      - bpytop
+      - btop
       - man-db
-      # File systems
-      - exfatprogs
-      - e2fsprogs
-      - btrfs-progs
       # salt
       - file
       # clipboard
       - xclip
       # pagers
       - less
+      - qubes-core-agent-thunar
+{% if grains['os_family'] == 'Debian' %}
+      - x11-utils
+      - wget
+      - xz-utils
+{% elif grains['os_family'] == 'RedHat' %}
+      - xkill
+      - wget2
+      - xz
+{% endif %}
     - skip_suggestions: True
     - install_recommends: False
     - order: 1
