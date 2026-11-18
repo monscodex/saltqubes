@@ -1,0 +1,5 @@
+user:
+  dom0:
+    - template-nix-test.create
+  template-nix-test or template-nix-test-new:
+    - template-nix-test.install
