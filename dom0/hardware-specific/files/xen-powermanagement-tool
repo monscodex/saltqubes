@@ -1,0 +1,47 @@
+#!/usr/bin/bash
+
+
+CPU_IDS=$(xenpm get-cpufreq-states | grep -E "^cpu id" | awk '{print $4}')
+
+# Joins all frequencies of all cpus
+# (in order of MAX, MIN and CURRENT for each cpu)
+# (so 6 cpus would give 6*3 = 12 frequencies)
+readarray FREQUENCIES < <(
+    xenpm get-cpufreq-para 2> /dev/null |
+    grep -E "^cpuinfo frequency" |
+    awk 'BEGIN{FS="["} {gsub(/\] [a-z]+ \[/, "[") gsub(/[a-z :]+\[/, "")} {gsub(/\]/, ""); print $0}' |
+    tr "[" "\n")
+
+echo All CPU IDS: $CPU_IDS
+
+if [ ${BASH_ARGV[0]} = "battery" ] ; then
+    POWERMODE=powersave
+    TURBOMODE=disable
+
+    # We want to assign the MINIMUM CPU frequency as the maximum frequency
+    # the cpu can reach
+    TARGET_FREQUENCY_INDEX=1
+else
+    POWERMODE=ondemand
+    TURBOMODE=enable
+
+    # We want to assign the MAXIMUM CPU frequency as the maximum frequency
+    # the cpu can reach
+    TARGET_FREQUENCY_INDEX=0
+fi
+
+for CPU_ID in $CPU_IDS
+do
+    xenpm set-scaling-governor $CPU_ID $POWERMODE
+    echo Powermode set to $POWERMODE for $CPU_ID
+
+    xenpm $TURBOMODE-turbo-mode $CPU_ID
+    echo Turbomode set to $TURBOMODE for $CPU_ID
+
+    xenpm set-scaling-maxfreq $CPU_ID ${FREQUENCIES[$TARGET_FREQUENCY_INDEX]}
+    echo Maximum scaling frequency set to ${FREQUENCIES[$TARGET_FREQUENCY_INDEX]}
+
+    # 3 frequencies per each cpu so +=3 would give the same frequency type for
+    # the next
+    TARGET_FREQUENCY_INDEX=$(( TARGET_FREQUENCY_INDEX + 3 ))
+done

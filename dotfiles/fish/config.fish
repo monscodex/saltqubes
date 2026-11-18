@@ -115,6 +115,17 @@ end
 
 # Working with salt in dom0. --force-color is called UNSAFE by the manpage
 if command -q qubesctl
+    # Useful when doing batch qubesctl enable/disable
+    function get_top_names_matching -a tops_dir top_name_regex
+        find $tops_dir -maxdepth 1 -regex (string join '' $tops_dir '.*' $top_name_regex '.top') -type f |
+            sed -rn 's/.*\/(.*).top/\1/p'
+    end
+
+    function get_vm_names_matching -a vm_name_regex
+         qvm-ls --raw-list |
+             sed -rn (string join '' 's/^(' $vm_name_regex ')/\1/p') # Implicit start of line
+     end
+
     alias qubesctl='qubesctl --show-output --force-color'
 end
 
@@ -157,6 +168,4 @@ end
 # :man-flexing-with-sunglasses:
 if command -q fastfetch
   fastfetch
-
-  alias neofetch='fastfetch'
 end

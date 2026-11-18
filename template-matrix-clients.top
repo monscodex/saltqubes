@@ -1,0 +1,5 @@
+user:
+  dom0:
+    - template-matrix-clients.create
+  template-matrix-clients or template-matrix-clients-new:
+    - template-matrix-clients.install

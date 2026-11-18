@@ -9,8 +9,10 @@ python3_install:
       - python3-poetry
 {% if grains['os_family'] == 'RedHat' %}
       - python3-devel
+      - python3-uv
 {% elif grains['os_family'] == 'Debian' %}
       - python3-dev
+      # python3-uv has no equivalent in the debian repos
 {% endif %}
 
 other-languages_install:
@@ -21,12 +23,14 @@ other-languages_install:
       - ruby
       - php
       - golang
-      - nodejs
+      - gdb
 {% if grains['os_family'] == 'RedHat' %}
       - java-latest-openjdk
-      - nodejs-npm
+      - nodejs24-npm-bin
+      - nodejs24
 {% elif grains['os_family'] == 'Debian' %}
       - default-jdk
+      - nodejs
       - npm
 {% endif %}
 

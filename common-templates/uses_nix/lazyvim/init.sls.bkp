@@ -1,0 +1,92 @@
+{{ slsdotpath }}_install_dependencies:
+  pkg.installed:
+    - pkgs:
+      - git
+      - fzf
+      - fd-find
+      - ripgrep
+
+{{ slsdotpath }}_install_neovim_with_nix:
+  module.run:
+    - name: nix.install
+    - pkgs:
+      - nixpkgs.neovim
+    - kwargs: {attributes: True}
+
+{% set system_dir = "/usr/share/custom_saltqubes_storage_dir/neovim/config/" %}
+{{ slsdotpath }}_link_neovim_config_on_boot:
+  module.run:
+    - name: link_on_boot.link
+    - link_path: /home/user/.config/nushell
+    - source_path: {{ system_dir }}
+
+{{ slsdotpath }}_create_shared_nvim_conf_dir:
+  file.directory:
+    - name: {{ system_dir }}
+    - user: user
+    - group: user
+    - dir_mode: 777
+    - makedirs: True
+
+
+# {% set linked_home_dir_to_system_dir = [
+# (".config/nvim", "config"),
+# (".cache/nvim", "cache"),
+# (".local/share/nvim", "local_share"),
+# (".local/state/nvim", "local_state"),
+# ]
+# %}
+# 
+# 
+# {% for home_dir_extension, system_dir_extension in linked_home_dir_to_system_dir %}
+# 
+#{% set system_dir = "/usr/share/custom_neovim_storage_dir/" ~ system_dir_extension %}
+
+#{{ slsdotpath }}_make_nvim_link_on_boot_{{ home_dir_extension }}:
+#module.run:
+#- name: link_on_boot.link
+# - link_path: /home/user/{{ home_dir_extension }}
+# - source_path: {{ system_dir }}
+
+# {{ slsdotpath }}_create_shared_nvim_conf_dir_{{ home_dir_extension }}:
+# file.directory:
+# - name: {{ system_dir }}
+# - user: user
+# - group: user
+# - dir_mode: 777
+# - makedirs: True
+
+# {% endfor %}
+
+# Only cloned if it is not cloned already
+{% if not salt['file.file_exists']('/home/user/.config/nvim/.git') %}
+
+{{ slsdotpath }}_install_lazyvim:
+  cmd.run:
+    - name: git clone https://github.com/LazyVim/starter /tmp/test && mv /tmp/test/* /home/user/.config/nvim/ && mv /tmp/test/.* /home/user/.config/nvim/
+    - runas: user
+    - env:
+      - https_proxy: http://localhost:8082
+
+{% endif %}
+
+
+{{ slsdotpath }}_copy_lazyvim_.config/nvim/lua/config:
+  file.recurse:
+    - source: salt://{{slspath}}/files/lua_config/
+    - name: /home/user/.config/nvim/lua/config
+    - user: user
+    - group: user
+
+
+
+# {{ slsdotpath }}_install_lunarvim_plugins:
+# cmd.run:
+# - name: /nix/var/nix/profiles/default/bin/nvim --headless "+Lazy! sync" +qa
+# # && nvim --headless "+TSInstall! all" +qa
+# - runas: user
+# - env:
+# - https_proxy: http://localhost:8082
+# - http_proxy: http://localhost:8082
+# - all_proxy: http://localhost:8082
+# - no_proxy: 127.0.0.1

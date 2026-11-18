@@ -16,12 +16,13 @@ include:
       - gthumb
       - mpv
       - celluloid
-      - pandoc
       - yt-dlp
       - youtube-dl
 {% if grains['os_family'] == 'RedHat' %}
+      - pandoc-common
+      - ghc-pandoc
       - vlc
-      - yt-dlp-fish-completion
-{% else %}
+{% elif grains['os_family'] == 'Debian' %}
+      - pandoc
       - vlc-bin
 {% endif %}

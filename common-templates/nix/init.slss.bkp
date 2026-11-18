@@ -1,0 +1,16 @@
+{{ slsdotpath }}_add_nixbld_group:
+  group.present:
+    - name: nixbld
+    - system: True
+
+{{ slsdotpath }}_add_nixbld_user:
+  user.present:
+    - name: nixbld
+    - gid: nixbld
+    - createhome: False
+
+# We are going to enable passwordless root momentarily. If it was enabled, it will not be removed
+{% set was_passwordless_root_installed = salt['pkg.version']("qubes-core-agent-passwordless-root") %}
+{{ slsdotpath }}_test_echo_{{ was_passwordless_root_installed}}:
+  cmd.run:
+    - name: echo

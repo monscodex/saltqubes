@@ -1,9 +1,11 @@
 install_disk_mounting_programs:
   pkg.installed:
     - pkgs:
+      # File systems
       - exfatprogs
       - e2fsprogs
       - btrfs-progs
+      - davfs2 # webdav
       - gnome-disk-utility
       - fuse
     - skip_suggestions: True

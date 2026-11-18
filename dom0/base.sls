@@ -2,7 +2,7 @@
 
 {{ slsdotpath }}_install_packages:
   cmd.run:
-    - name: qubes-dom0-update -y rofi flameshot redshift adwaita-qt5
+    - name: qubes-dom0-update -y rofi flameshot redshift # adwaita-qt5
 
 
 
@@ -18,15 +18,15 @@
 
 
 
-{{ slsdotpath }}_copy_xfce4_settings:
-  file.recurse:
-    - name: /home/{{ dom0_user }}/.config/xfce4/xfconf/
-    - source: salt://dotfiles/xfce4/xfconf/
-    - user: root
-    - group: root
-    - file_mode: '0666'
-    - dir_mode: '0755'
-    - makedirs: True
+#{{ slsdotpath }}_copy_xfce4_settings:
+#file.recurse:
+#- name: /home/{{ dom0_user }}/.config/xfce4/xfconf/
+#- source: salt://dotfiles/xfce4/xfconf/
+#- user: root
+#- group: root
+#- file_mode: '0666'
+#- dir_mode: '0755'
+#- makedirs: True
 
 
 
@@ -130,6 +130,10 @@
     - mode: 444
 
 
+{{ slsdotpath }}_set_xfce_configuration_dark_theme:
+  cmd.run:
+    - name: xfconf-query -c xsettings -p /Net/ThemeName -s Adwaita-dark
+    - runas: {{ dom0_user }}
 
 {{ slsdotpath }}_dark_theme_delete_QT_STYLE_ENV_VAR:
   cmd.run:

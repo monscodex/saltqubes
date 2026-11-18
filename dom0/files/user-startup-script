@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
+# Reload Udev rules on boot
+udevadm control --reload
+udevadm trigger
+
 # Fix Pipewire not working
 # In Qubes 4.2
-rm -rf /home/{{ dom0_user }}/.config/pulse/
-sleep 7
-pulseaudio -k
+# NO LONGER NEEDED
+#rm -rf /home/{{ dom0_user }}/.config/pulse/
+#sleep 7
+#pulseaudio -k
 
 # Set right alt compose key (does accents and cool chars)
 setxkbmap -option compose:ralt
@@ -12,8 +17,7 @@ setxkbmap -option compose:ralt
 source /home/{{ dom0_user}}/.bashrc
 
 open_protonvpn_in_vm() {
-    qvm-run -q -a --service -- $1 qubes.StartApp+protonvpn-app
-
+    qvm-run -q -a --service -- $1 qubes.StartApp+proton.vpn.app.gtk
     sleep 4
 
     xdotool type $ZOO_TICKET

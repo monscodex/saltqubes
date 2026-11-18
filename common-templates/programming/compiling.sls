@@ -6,6 +6,9 @@
       - cmake
       - libtool
       - automake
+      - qt5-qtbase-devel
+      - qt5-designer
+      - glm-devel
 {% if grains['os_family'] == 'RedHat' %}
       - gcc
       - make
@@ -13,7 +16,7 @@
       - autoconf
       - gcc-c++
       - libevent-devel
-{% elif grains['os_family'] == 'RedHat' %}
+{% elif grains['os_family'] != 'RedHat' %}
       - build-essential
       - autotools-dev
       - bsdmainutils

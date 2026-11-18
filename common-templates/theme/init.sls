@@ -1,4 +1,4 @@
-installed:
+{{ slsdotpath }}_install:
   pkg.installed:
     - pkgs:
 {% if grains['os_family'] == 'Debian' %}
@@ -8,7 +8,7 @@ installed:
 {% elif grains['os_family'] == 'RedHat' %}
       - qt5-qtstyleplugins
       - gtk-murrine-engine
-      - gnome-themes-extra
+      - adw-gtk3-theme
 {% endif %}
     - skip_suggestions: True
     - install_recommends: False
@@ -20,3 +20,13 @@ include:
   - common-templates.theme.gtk
   - common-templates.theme.qt
 
+
+# For the moment I don't need a fancy theme for flatpaks
+# Just Dark.
+{% if salt['file.file_exists']('/usr/bin/flatpak') %}
+
+{{ slsdotpath }}_setup_flatpak_dark:
+  cmd.run:
+    - name: flatpak override --env=GTK_THEME=Adwaita:dark
+
+{% endif %}

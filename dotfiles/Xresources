@@ -152,40 +152,80 @@ XTerm*VT100*translations:    #override \n\
 !   Shift Ctrl <Key>M: maximize() \n\
 !   Shift Ctrl <Key>R: restore()
 
-!Background & foreground
-!XTerm*background: #002B36
-!WONTFIX: a pure black is better on OLED
-*.foreground:    #A9B1D6
-*.background:    #1A1B26
-*.cursorColor:   #A9B1D6
-*.highlightColor:#3A3F4B
+!!Background & foreground
+!!XTerm*background: #002B36
+!!WONTFIX: a pure black is better on OLED
+!*.foreground:    #A9B1D6
+!*.background:    #1A1B26
+!*.cursorColor:   #A9B1D6
+!*.highlightColor:#3A3F4B
 
-!Colors: Tokyo Night (stronk-dev/Tokyo-Night-Linux)
-!-------------------------
-! Black colours
-*.color0:        #1A1B26
-*.color8:        #4E5173
-! Red colours
-*.color1:        #F7768E
-*.color9:        #E06C75
-! Yellow colours
-*.color2:        #E0AF68
-*.color10:       #D19A66
-! Green colours
-*.color3:        #9ECE6A
-*.color11:       #98C379
-! Blue colours
-*.color4:        #7AA2F7
-*.color12:       #61AFEF
-! Magenta (pink, !green) colours
-*.color5:        #9A7ECC
-*.color13:       #C678DD
-! Cyan (blue + green)
-*.color6:        #4ABAAF
-*.color14:       #56B6C2
-! White colours
-*.color7:        #ACB0D0
-*.color15:       #ABB2BF
+! THEMING
+
+! Base16 Bright (see https://github.com/janoamaral/Xresources-themes)
+! Scheme: Chris Kempson (http://chriskempson.com)
+
+*.foreground:   #e0e0e0
+#ifdef background_opacity
+*.background:   [background_opacity]#000000
+#else
+*.background:   #000000
+#endif
+*.cursorColor:  #e0e0e0
+
+*.color0:       #000000
+*.color1:       #fb0120
+*.color2:       #a1c659
+*.color3:       #fda331
+*.color4:       #6fb3d2
+*.color5:       #d381c3
+*.color6:       #76c7b7
+*.color7:       #e0e0e0
+
+*.color8:       #b0b0b0
+*.color9:       #fb0120
+*.color10:      #a1c659
+*.color11:      #fda331
+*.color12:      #6fb3d2
+*.color13:      #d381c3
+*.color14:      #76c7b7
+*.color15:      #ffffff
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*.color16:      #fc6d24
+*.color17:      #be643c
+*.color18:      #303030
+*.color19:      #505050
+*.color20:      #d0d0d0
+*.color21:      #f5f5f5
+
+!!Colors: Tokyo Night (stronk-dev/Tokyo-Night-Linux)
+!!-------------------------
+!! Black colours
+!*.color0:        #1A1B26
+!*.color8:        #4E5173
+!! Red colours
+!*.color1:        #F7768E
+!*.color9:        #E06C75
+!! Yellow colours
+!*.color2:        #E0AF68
+!*.color10:       #D19A66
+!! Green colours
+!*.color3:        #9ECE6A
+!*.color11:       #98C379
+!! Blue colours
+!*.color4:        #7AA2F7
+!*.color12:       #61AFEF
+!! Magenta (pink, !green) colours
+!*.color5:        #9A7ECC
+!*.color13:       #C678DD
+!! Cyan (blue + green)
+!*.color6:        #4ABAAF
+!*.color14:       #56B6C2
+!! White colours
+!*.color7:        #ACB0D0
+!*.color15:       #ABB2BF
 
 ! For regular sized screens (not 4k)
 ! apt install fonts-terminus xfonts-terminus xfonts-terminus-oblique fonts-inconsolata
@@ -240,7 +280,7 @@ XTerm*boldFont: CaskaydiaCove Nerd font Mono:style=Bold
 
 ! FIXME: A pointer of the same approx size is not working
 !Xcursor*size: 32
-Xcursor.size: 64
+Xcursor.size: 32
 ! FIXME: The following can help making it more visible
 !XTerm*pointerColor: blue
 !XTerm*pointerColorBackground: red

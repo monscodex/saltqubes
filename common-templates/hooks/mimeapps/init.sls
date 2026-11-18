@@ -1,9 +1,10 @@
 # HELP... CANNOT SET SALT GRAINS WITH grains.present
 # ISSUE REPORTED IN https://forum.qubes-os.org/t/salt-grains-not-visible-to-target-vms/19151
 
-{% set default_app='qvm-open-in-dvm.desktop' %}
 {% set standard_repo_path='/usr/share/applications/' %}
 {% set flatpak_repo_path='/var/lib/flatpak/exports/share/applications/' %}
+
+{% set default_app = 'qvm-open-in-dvm.desktop' %}
 
 {% set preferred_applications = ({
   'word_document':
@@ -44,7 +45,7 @@
   'video_player':
       [
           standard_repo_path,
-          'io.github.celluloid_player.Celluloid.desktop'
+          'vlc.desktop'
       ],
   'web_browser':
       [
@@ -63,6 +64,17 @@
       ],
 })%}
 
+{{ slsdotpath }}_delete_XDG_CURRENT_DESKTOP_variable:
+  cmd.run:
+    - name: sed -i '/XDG_CURRENT_DESKTOP/d' /etc/environment
+
+{{ slsdotpath }}_append_XDG_CURRENT_DESKTOP_variable:
+  file.append:
+    - name: /etc/environment
+    - text: "XDG_CURRENT_DESKTOP=XFCE"
+
+
+
 {{ slsdotpath }}_copy_mimeapps_list_file:
   file.managed:
     - name: /usr/share/applications/mimeapps.list
@@ -75,12 +87,19 @@
 # Pass correct preferred application variables
 # If desktop file exits => application installed => custom value for mimeapp
 # Else set default app value
-{% for variable, desktop_file_name in preferred_applications.items() %}
-  {% set desktop_file_path = "/usr/share/applications/" ~ desktop_file_name %}
-  {% set app =
-    desktop_file_path
+{% for variable_to_pass, desktop_file_split_path in preferred_applications.items() %}
+  {% set desktop_file_path = "".join(desktop_file_split_path) %}
+  {% set chosen_application =
+    desktop_file_split_path[1]
     if salt['file.file_exists'](desktop_file_path)
     else default_app
   %}
-      {{ variable }}: {{ desktop_file_name }}
+      {{ variable_to_pass }}: {{ chosen_application }}
 {% endfor %}
+
+
+
+{{ slsdotpath }}_update_desktop_databases:
+  cmd.run:
+    - name: update-desktop-database -v
+    - runas: root
