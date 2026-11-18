@@ -6,6 +6,11 @@ QubesOS is a powerful "security by isolation" operating system. Here we use Salt
 
 Abstract and automate _some_ of your qubes system complexity. Save time and organize yourself.
 
+## Exciting features
+
+1. Install packages using the nix package manager in the templates! (remember that nix is not compatible with SELinux).
+2. Configure once, run everywhere! _link_on_boot_ enables you to configure your software in the template, and tell the AppVMs to link on boot the usual configuration directories (e.g. `~/.config/nvim`) to the template's configurations. This way, AppVMs can use find their configuration in `~/.config`. If you update the template config, the appvms use the updated version automatically. If you decide no longer to use this, it will automatically remove itself as if nothing had happened.
+
 ## Warning
 
 Qubes development involves high-security procedures to distribute code. It is safe to assume this repo has none.
