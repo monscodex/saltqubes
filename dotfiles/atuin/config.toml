@@ -1,0 +1,14 @@
+style = "full"
+
+enter_accept = false
+
+keymap_mode = "vim-normal"
+
+[keymap.vim-insert]
+"k j" = "vim-enter-normal"
+
+[keys]
+scroll_exits = false
+
+[sync]
+records = true
