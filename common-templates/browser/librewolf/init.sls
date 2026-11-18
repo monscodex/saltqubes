@@ -16,15 +16,25 @@
 {% elif grains['os_family'] == 'RedHat' %}
 
 
-{{ slsdotpath }}_copy_gpg_key:
-  file.managed:
-    - name: /etc/pki/rpm-gpg/RPM-GPG-KEY-librewolf
-    - source: salt://{{ slspath }}/librewolf.gpg
 
-{{ slsdotpath }}_copy_repo:
-  file.managed:
-    - name: /etc/yum.repos.d/librewolf.repo
-    - source: salt://{{ slspath }}/librewolf.repo
+#{{ slsdotpath }}_copy_gpg_key:
+  #file.managed:
+    #- name: /etc/pki/rpm-gpg/RPM-GPG-KEY-librewolf
+    #- source: salt://{{ slspath }}/librewolf.gpg
+
+#{{ slsdotpath }}_copy_repo:
+#  file.managed:
+#    - name: /etc/yum.repos.d/librewolf.repo
+#    - source: salt://{{ slspath }}/librewolf.repo
+
+{{ slsdotpath }}_add_repo:
+  cmd.run:
+    - name: dnf config-manager addrepo --from-repofile=https://repo.librewolf.net/librewolf.repo -y --overwrite
+    - runas: root
+    - env:
+      - HTTPS_PROXY: http://localhost:8082
+
+
 
 
 {% endif %}

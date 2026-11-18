@@ -10,47 +10,13 @@
 {% else %}
 
 
-{{ slsdotpath }}_add_docker_repository:
-  cmd.run:
-    - name: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-
-{{ slsdotpath }}_update_docker_repository:
-  pkg.uptodate:
-    - refresh: True
-
 {{ slsdotpath }}_install_docker:
   pkg.installed:
     - pkgs:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-compose-plugin
-
-{{ slsdotpath }}_add_users_to_docker_group:
-  group.present:
-    - name: docker
-    - addusers:
-      - user
-      - root
-
-{{ slsdotpath }}_mkdir_etc_docker:
-  file.directory:
-    - name: /etc/docker
-    - makedirs: True
-    - user: root
-    - group: root
-
-{{ slsdotpath }}_copy_docker_daemon:
-  file.managed:
-    - name: /etc/docker/daemon.json
-    - source: salt://common-templates/docker/daemon.json
-    - user: root
-    - group: root
-    - mode: 444
-
-{{ slsdotpath }}_enable_docker_service:
-  cmd.run:
-    - name: systemctl enable docker
+      - containerd
+      - docker-cli
+      - docker-compose
+      - docker-compose-switch
 
 
 {% endif %}

@@ -7,8 +7,8 @@ archives_install:
       - thunar-archive-plugin
 {% if grains['os_family'] == 'Debian' %}
       - unrar-free
-      - p7zip-full
+      - p7zip
 {% elif grains['os_family'] == 'RedHat' %}
       - unrar
-      - p7zip
+      - 7zip-standalone-all
 {% endif %}

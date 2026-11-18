@@ -8,6 +8,4 @@ include:
 
 {{ slsdotpath }}_install_vscodium_flatpak:
   cmd.run:
-    - name: flatpak install -y flathub com.vscodium.codium
-    - env:
-      - HTTPS_PROXY: http://localhost:8082
+    - name: https_proxy=http://localhost:8082 flatpak install -y flathub com.vscodium.codium

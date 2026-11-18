@@ -1,10 +1,10 @@
 {{ slsdotpath }}_download_caskaydia_cove_regular:
   cmd.run:
-    - name: curl -LJ --proxy http://127.0.0.1:8082 -o /tmp/caskaydiacove.ttf -- "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/CascadiaCode/Regular/CaskaydiaCoveNerdFontMono-Regular.ttf?raw=true"
+    - name: curl -LJ --proxy http://127.0.0.1:8082 -o /tmp/caskaydiacove.ttf -- "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf?raw=true"
 
 {{ slsdotpath }}_download_caskaydia_cove_bold:
   cmd.run:
-    - name: curl -LJ --proxy http://127.0.0.1:8082 -o /tmp/caskaydiacovebold.ttf -- "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/CascadiaCode/Bold/CaskaydiaCoveNerdFontMono-Bold.ttf?raw=true"
+    - name: curl -LJ --proxy http://127.0.0.1:8082 -o /tmp/caskaydiacovebold.ttf -- "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/CascadiaCode/CaskaydiaCoveNerdFontMono-Bold.ttf?raw=true"
 
 {{ slsdotpath }}_copy_caskaydia_cove_regular:
   file.managed:
