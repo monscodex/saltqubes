@@ -1,14 +1,14 @@
 {% if grains['os_family'] == 'Debian' %}
     {% set protonvpnPackage = ({
-        "url": "https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3-3_all.deb",
+        "url": "https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.8_all.deb",
         "filename": "protonvpn.deb",
         "verify_hash": true,
-        "sha256hash": "de7ef83a663049b5244736d3eabaacec003eb294a4d6024a8fbe0394f22cc4e5",
+        "sha256hash": "0b14e71586b22e498eb20926c48c7b434b751149b1f2af9902ef1cfe6b03e180",
         "pkgnames": ["proton-vpn-gnome-desktop"]
     }) %}
 {% elif grains['os_family'] == 'RedHat' %}
     {% set protonvpnPackage = ({
-        "url": "https://repo.protonvpn.com/fedora-" ~ grains['osrelease'] ~ "-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.1-2.noarch.rpm",
+        "url": "https://repo.protonvpn.com/fedora-" ~ grains['osrelease'] ~ "-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.3-1.noarch.rpm",
         "filename": "protonvpn.rpm",
         "verify_hash": false,
         "pkgnames": ["proton-vpn-gnome-desktop"]

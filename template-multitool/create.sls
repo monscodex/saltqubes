@@ -28,7 +28,7 @@
 
 {{ slsdotpath }}-resize-root-volume:
   cmd.run:
-    - name: qvm-volume resize {{ template_name }}:root 25Gi
+    - name: qvm-volume resize {{ template_name }}:root 38Gi
 
 {{ slsdotpath }}_menu:
   qvm.features:

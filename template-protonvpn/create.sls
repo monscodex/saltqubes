@@ -28,7 +28,7 @@
 {% if 'debian' in base_template %}
     {% set protonvpn_desktop="protonvpn.desktop"  %}
 {% elif 'fedora' in base_template %}
-    {% set protonvpn_desktop="protonvpn-app.desktop"  %}
+    {% set protonvpn_desktop="proton.vpn.app.gtk.desktop"  %}
 {% else %}
     {% set protonvpn_desktop=""  %}
 {% endif %}
