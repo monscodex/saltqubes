@@ -18,8 +18,11 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-local qubes = require("qubes")
 
+local qubes = require("qubes")
+local battery_widget = require("awesome-wm-widgets/batteryarc-widget/batteryarc")
+local volume_control = require("volume-control")
+local volumecfg = volume_control({})
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -163,6 +166,7 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -195,7 +199,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -212,6 +216,8 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+	    volumecfg.widget,
+            battery_widget(),
             s.mylayoutbox,
         },
     }
@@ -230,6 +236,8 @@ local qubes_scripts = {
     open_application_in_active_window = '/opt/qubes-tools/open_application_in_active_window.py',
     open_application_in_template_of_active_window = '/opt/qubes-tools/open_application_in_template_of_active_window.py',
 };
+
+local show_titlebars = true;
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
@@ -284,6 +292,29 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
 
+    awful.key({ modkey }, "t", function ()
+        myscreen = awful.screen.focused()
+        myscreen.mywibox.visible = not myscreen.mywibox.visible
+    end,
+              {description = "toggle wibox s[t]atusbar", group = "awesome"}),
+
+
+    awful.key({ modkey, "Shift"   }, "t", function ()
+        -- Toggle
+        show_titlebars = not show_titlebars
+
+        local clients = client.get()
+
+        for i = 1, #clients do
+            if show_titlebars then
+                awful.titlebar.show(clients[i])
+            else
+                awful.titlebar.hide(clients[i])
+            end
+        end
+    end,
+              {description = "toggle all client [t]itlebars", group = "awesome"}),
+
     -- Screenshots
     awful.key({ modkey, },            "s",     function ()
         awful.spawn('/opt/qubes-tools/take_dom0_flameshot_screnshot_and_send_to_active_vm.py')
@@ -292,6 +323,10 @@ globalkeys = gears.table.join(
 
 
 
+    -- Volume
+    awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
+    awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
+    awful.key({}, "XF86AudioMute", function() volumecfg:toggle() end),
 
 
     -- Rofi
@@ -304,6 +339,11 @@ globalkeys = gears.table.join(
         awful.spawn("rofi -show-icons -show window")
     end,
               {description = "window selector", group = "launcher"}),
+
+    awful.key({ modkey, "Control" },            "space",     function ()
+        awful.spawn(qubes_scripts.execute_command_to_active_vm .. ' \'rofi -columns 2 -fullscreen -show-icons -show drun -filter "<--Name-->: "\'')
+    end,
+              {description = "select application in current vm", group = "launcher"}),
 
 
     -- Show settings of current vm
@@ -356,17 +396,17 @@ globalkeys = gears.table.join(
 
     -- Launching terminal
     awful.key({ modkey },            "Return",     function ()
-        awful.spawn(qubes_scripts.open_application_in_active_window .. " xterm xterm")
+        awful.spawn(qubes_scripts.open_application_in_active_window .. ' xterm xterm')
     end,
               {description = "launch terminal in current vm", group = "launcher"}),
 
     awful.key({ modkey, "Shift" },            "Return",     function ()
-        awful.spawn(qubes_scripts.open_application_in_active_window .. " xterm xterm root")
+        awful.spawn(qubes_scripts.open_application_in_active_window .. ' xterm xterm root')
     end,
               {description = "launch terminal in current vm as root", group = "launcher"}),
 
     awful.key({ modkey, "Control" },            "Return",     function ()
-        awful.spawn(qubes_scripts.open_application_in_template_of_active_window .. " xterm xterm")
+        awful.spawn(qubes_scripts.open_application_in_template_of_active_window .. ' xterm xterm')
     end,
               {description = "launch terminal in template of current vm", group = "launcher"}),
 
@@ -446,6 +486,14 @@ clientkeys = gears.table.join(
               {description = "go to left client", group = "client"}),
     awful.key({ modkey, }, "l", function () awful.client.focus.bydirection("right")    end,
               {description = "go to right client", group = "client"}),
+    awful.key({ modkey, }, "Down", function () awful.client.focus.bydirection("down")    end,
+              {description = "go to down client", group = "client"}),
+    awful.key({ modkey, }, "Up", function () awful.client.focus.bydirection("up")    end,
+              {description = "go to up client", group = "client"}),
+    awful.key({ modkey, }, "Left", function () awful.client.focus.bydirection("left")    end,
+              {description = "go to left client", group = "client"}),
+    awful.key({ modkey, }, "Right", function () awful.client.focus.bydirection("right")    end,
+              {description = "go to right client", group = "client"}),
 
     -- Move windows
     awful.key({ modkey, "Control"   }, "k", function () awful.client.swap.global_bydirection("up")    end,
@@ -455,6 +503,14 @@ clientkeys = gears.table.join(
     awful.key({ modkey, "Control"   }, "h", function () awful.client.swap.global_bydirection("left")    end,
               {description = "swap with left client", group = "client"}),
     awful.key({ modkey, "Control"   }, "l", function () awful.client.swap.global_bydirection("right")    end,
+              {description = "swap with right client", group = "client"}),
+    awful.key({ modkey, "Control"   }, "Up", function () awful.client.swap.global_bydirection("up")    end,
+              {description = "swap with up client", group = "client"}),
+    awful.key({ modkey, "Control"   }, "Down", function () awful.client.swap.global_bydirection("down")    end,
+              {description = "swap with down client", group = "client"}),
+    awful.key({ modkey, "Control"   }, "Left", function () awful.client.swap.global_bydirection("left")    end,
+              {description = "swap with left client", group = "client"}),
+    awful.key({ modkey, "Control"   }, "Right", function () awful.client.swap.global_bydirection("right")    end,
               {description = "swap with right client", group = "client"}),
 
     -- Resize windows
@@ -486,6 +542,41 @@ clientkeys = gears.table.join(
               {description = "Resize Vertical -", group = "client"}),
 
     awful.key({ modkey, "Shift"           }, "k",      function (c)
+        if c.floating then
+            c:relative_move( 0, 0, 0, 10)
+        else
+            awful.client.incwfact(-0.075)
+        end
+    end,
+              {description = "Resize Vertical +", group = "client"}),
+    awful.key({ modkey, "Shift"           }, "Right",      function (c)
+        if c.floating then
+            c:relative_move( 0, 0, 10, 0)
+        else
+            awful.tag.incmwfact(0.025)
+        end
+    end,
+              {description = "Resize Horizontal +", group = "client"}),
+
+    awful.key({ modkey, "Shift"           }, "Left",      function (c)
+        if c.floating then
+            c:relative_move( 0, 0, -10, 0)
+        else
+            awful.tag.incmwfact(-0.025)
+        end
+    end,
+              {description = "Resize Horizontal -", group = "client"}),
+
+    awful.key({ modkey, "Shift"           }, "Down",      function (c)
+        if c.floating then
+            c:relative_move( 0, 0, 0, -10)
+        else
+            awful.client.incwfact(0.075)
+        end
+    end,
+              {description = "Resize Vertical -", group = "client"}),
+
+    awful.key({ modkey, "Shift"           }, "Up",      function (c)
         if c.floating then
             c:relative_move( 0, 0, 0, 10)
         else
@@ -592,7 +683,9 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = {
+	      -- border_width = beautiful.border_width,
+		     border_width = 1,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
@@ -702,6 +795,10 @@ client.connect_signal("request::titlebars", function(c)
         },
         layout = wibox.layout.align.horizontal
     }
+
+    if not show_titlebars then
+        awful.titlebar.hide(c)
+    end
 end)
 
 -- Put the Qube name in front of all displayed names (tilebars, tasklists, ...)
